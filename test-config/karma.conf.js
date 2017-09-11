@@ -1,5 +1,3 @@
-//http://roblouie.com/article/376/ionic-2-set-up-unit-testing-the-best-way/
-
 var webpackConfig = require('./webpack.test.js');
 
 module.exports = function (config) {
@@ -32,7 +30,7 @@ module.exports = function (config) {
     logLevel: config.LOG_INFO,
     autoWatch: true,
     browsers: ['Chrome'],
-    singleRun: true //to see results in jasmine
+    singleRun: false
   };
 
   config.set(_config);

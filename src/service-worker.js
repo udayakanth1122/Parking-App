@@ -5,10 +5,7 @@
 
 
 'use strict';
-
-if('function' === typeof importScripts) {
-    importScripts('./build/sw-toolbox.js');
-}
+importScripts('./build/sw-toolbox.js');
 
 self.toolbox.options.cache = {
   name: 'ionic-cache'
