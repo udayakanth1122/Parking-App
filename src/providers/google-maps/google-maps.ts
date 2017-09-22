@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ConnectivityProvider } from '../connectivity/connectivity'
 import { Geolocation } from '@ionic-native/geolocation';
+import { AlertController } from 'ionic-angular';
 
 /*
   Generated class for the GoogleMapsProvider provider.
@@ -10,6 +11,8 @@ import { Geolocation } from '@ionic-native/geolocation';
 */
 
 declare var google;
+
+/* Google Maps Styling */
 var $main_color = '#2d313f',
   $saturation = -20,
   $brightness = 5;
@@ -183,6 +186,8 @@ var style = [
   }
 ];
 
+let options = { timeout: 10000, enableHighAccuracy: true };
+
 @Injectable()
 export class GoogleMapsProvider {
 
@@ -198,7 +203,8 @@ export class GoogleMapsProvider {
   apiKey: string = 'AIzaSyB_lXHx2An5sR4F0Fwvy2s4x-eVQDfJBwc';
 
   constructor(public connectivityService: ConnectivityProvider,
-    public geolocation: Geolocation) {
+    public geolocation: Geolocation,
+    private alertCtrl: AlertController) {
 
   }
 
@@ -268,7 +274,7 @@ export class GoogleMapsProvider {
 
     return new Promise((resolve) => {
 
-      this.geolocation.getCurrentPosition().then((position) => {
+      this.geolocation.getCurrentPosition(options).then((position) => {
 
         // UNCOMMENT FOR NORMAL USE
         let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
@@ -285,6 +291,7 @@ export class GoogleMapsProvider {
           mapTypeId: google.maps.MapTypeId.ROADMAP,
           scrollwheel: false,
           styles: style,
+          disableDefaultUI: true
         }
 
         this.map = new google.maps.Map(this.mapElement, mapOptions);
@@ -357,6 +364,23 @@ export class GoogleMapsProvider {
     });
 
     this.markers.push(marker);
+
+  }
+
+  getCurrentPosition(): void {
+
+    this.geolocation.getCurrentPosition(options).then((position) => {
+      let alert = this.alertCtrl.create({
+        title: 'Low battery',
+        subTitle: '10% of battery remaining',
+        buttons: ['Dismiss']
+      });
+      alert.present();
+      // UNCOMMENT FOR NORMAL USE
+      //let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+      console.log(position.coords.latitude + "+" + position.coords.longitude);
+
+    });
 
   }
 

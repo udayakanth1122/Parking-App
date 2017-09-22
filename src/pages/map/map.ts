@@ -1,7 +1,7 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { LocationsProvider } from '../../providers/locations/locations';
 import { GoogleMapsProvider } from '../../providers/google-maps/google-maps';
-import { IonicPage, NavController, Platform } from 'ionic-angular';
+import { IonicPage, NavController, Platform, AlertController } from 'ionic-angular';
 
 /**
  * Generated class for the MapPage page.
@@ -22,7 +22,8 @@ export class MapPage {
   constructor(public navCtrl: NavController,
     public maps: GoogleMapsProvider,
     public platform: Platform,
-    public locations: LocationsProvider) {
+    public locations: LocationsProvider,
+    private alertCtrl: AlertController) {
 
   }
 
@@ -48,6 +49,10 @@ export class MapPage {
 
     });
 
+  }
+
+  markCurrentPosition() {
+    this.maps.getCurrentPosition();
   }
 
 }
