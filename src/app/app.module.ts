@@ -15,7 +15,7 @@ import { ListPage } from '../pages/list/list';
 import { ConnectivityProvider } from '../providers/connectivity/connectivity';
 import { GoogleMapsProvider } from '../providers/google-maps/google-maps';
 import { LocationsProvider } from '../providers/locations/locations';
-
+import {AuthService} from '../services/auth.service';
 @NgModule({
   declarations: [
     MyApp,
@@ -43,7 +43,8 @@ import { LocationsProvider } from '../providers/locations/locations';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     ConnectivityProvider,
     GoogleMapsProvider,
-    LocationsProvider
+    LocationsProvider,
+    AuthService
   ]
 })
 export class AppModule {}

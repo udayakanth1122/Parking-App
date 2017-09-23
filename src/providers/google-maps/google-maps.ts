@@ -222,36 +222,27 @@ export class GoogleMapsProvider {
     return new Promise((resolve) => {
 
       if (typeof google == "undefined" || typeof google.maps == "undefined") {
-
         console.log("Google maps JavaScript needs to be loaded.");
         this.disableMap();
-
         if (this.connectivityService.isOnline()) {
-
           window['mapInit'] = () => {
-
             this.initMap().then(() => {
               resolve(true);
             });
-
             this.enableMap();
           }
 
           let script = document.createElement("script");
           script.id = "googleMaps";
-
           if (this.apiKey) {
             script.src = 'http://maps.google.com/maps/api/js?key=' + this.apiKey + '&callback=mapInit';
           } else {
             script.src = 'http://maps.google.com/maps/api/js?callback=mapInit';
           }
-
           document.body.appendChild(script);
-
         }
       }
       else {
-
         if (this.connectivityService.isOnline()) {
           this.initMap();
           this.enableMap();
@@ -259,28 +250,18 @@ export class GoogleMapsProvider {
         else {
           this.disableMap();
         }
-
       }
-
       this.addConnectivityListeners();
-
     });
-
   }
 
   initMap(): Promise<any> {
-
     this.mapInitialised = true;
-
     return new Promise((resolve) => {
-
       this.geolocation.getCurrentPosition(options).then((position) => {
-
         // UNCOMMENT FOR NORMAL USE
         let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-
         //let latLng = new google.maps.LatLng(40.713744, -74.009056);
-
         let mapOptions = {
           center: latLng,
           zoom: 15,
@@ -371,14 +352,24 @@ export class GoogleMapsProvider {
 
     this.geolocation.getCurrentPosition(options).then((position) => {
       let alert = this.alertCtrl.create({
-        title: 'Low battery',
-        subTitle: '10% of battery remaining',
-        buttons: ['Dismiss']
+        title: 'Thanks!',
+        subTitle: 'Successfully Marked this spot!!',
+        buttons: ['Ok']
       });
       alert.present();
       // UNCOMMENT FOR NORMAL USE
       //let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
       console.log(position.coords.latitude + "+" + position.coords.longitude);
+      var userSpotInformation = {
+        // "username": this.auth.user['name'] || null,
+        // "email": this.auth.user['email'] || null,
+        "parkingInfo": [{
+          "lat": position.coords.latitude,
+          "lng": position.coords.longitude,
+          "date-time": new Date(),
+          "isEmpty": true
+        }]
+      };
 
     });
 

@@ -2,6 +2,7 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { LocationsProvider } from '../../providers/locations/locations';
 import { GoogleMapsProvider } from '../../providers/google-maps/google-maps';
 import { IonicPage, NavController, Platform, AlertController } from 'ionic-angular';
+import { AuthService } from '../../services/auth.service';
 
 /**
  * Generated class for the MapPage page.
@@ -23,7 +24,8 @@ export class MapPage {
     public maps: GoogleMapsProvider,
     public platform: Platform,
     public locations: LocationsProvider,
-    private alertCtrl: AlertController) {
+    private alertCtrl: AlertController,
+    public auth: AuthService) {
 
   }
 
